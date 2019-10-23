@@ -8,4 +8,10 @@
     <DocumentationFile></DocumentationFile>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Update="ServerGame.cd">
+      <CustomToolNamespace>ServerGame</CustomToolNamespace>
+    </None>
+  </ItemGroup>
+
 </Project>

@@ -52,18 +52,18 @@ namespace ServerGame
 
 
         #region internal_var
-        /// <summary>
-        /// Zone Info
-        /// </summary>
-        IZone _ZoneRef { get; set; } // ref IZone
+
 
         /// <summary>
         /// All evnets type and methods of envets
         /// </summary>
         List<Ievnet> _MyEvnets { get; set; }
+        /// <summary>
+        /// Zone Info
+        /// </summary>
+       public IZone IZone { get; protected set; }
 
         #endregion
-
 
         #region Public_Method
 
