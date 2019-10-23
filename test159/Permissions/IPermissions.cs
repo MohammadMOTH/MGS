@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ServerGame
+namespace ServerGame.Permissions
 {
-    interface PermissionsUser
+    interface IPermissions
     {
     }
 }

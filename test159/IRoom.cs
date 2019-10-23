@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
+using ServerGame.Permissions;
 namespace ServerGame
 {
     interface IRoom
@@ -11,7 +11,7 @@ namespace ServerGame
       
 
         /// <summary>
-        ///     Name of Room
+        /// Name of Room
         /// </summary>
         public string Name { get; set; }
         /// <summary>
@@ -28,7 +28,7 @@ namespace ServerGame
         /// <summary>
         ///  Permissions to inspict 
         /// </summary>
-        public PermissionsUser PermissionsUser { get; set; }
+        public IPermissionsUser PermissionsUser { get; set; }
 
 
         /// <summary>
@@ -49,7 +49,6 @@ namespace ServerGame
 
 
         #endregion
-
 
         #region internal_var
 
