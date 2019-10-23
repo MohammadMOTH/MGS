@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Interface Name="ServerGame.IBuddy">
+    <Position X="5.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IBuddy.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ServerGame.IData">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IData.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ServerGame.Ievnet">
+    <Position X="5.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IEvnet.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ServerGame.IRoom">
+    <Position X="1.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAKAAAAEAAAAAAAABAAAkQAgBAAAAAQBAAAkAAACAA=</HashCode>
+      <FileName>IRoom.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="IZone" />
+    </ShowAsAssociation>
+  </Interface>
+  <Interface Name="ServerGame.IUser">
+    <Position X="5.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IUser.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ServerGame.IZone">
+    <Position X="3.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IZone.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ServerGame.PermissionsUser">
+    <Position X="5.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>PermissionsUser.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ServerGame.Connctions.IServer" Collapsed="true">
+    <Position X="9" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAQAAAAABAAAAAAAAAAAAAEAAAEAAAAAAAA=</HashCode>
+      <FileName>Connctions\IServer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="ServerGame.ConnctionType">
+    <Position X="13" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAIAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Connctions\ConnctionType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
