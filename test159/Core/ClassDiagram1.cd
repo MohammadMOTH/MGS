@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ServerGame.Program">
+    <Position X="9.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ServerGame.Core.MEF.MEFAbstract">
+    <Position X="2.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\MEF\MEFAbstract.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ServerGame.Core.MEF.MEF">
+    <Position X="2.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\MEF\MEF.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ServerGame.Core.Room.RoomAbstract">
+    <Position X="12.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BACKAAAAEAAAAAAAABAAAkQQgBAEAAAUBAAAGAAACgA=</HashCode>
+      <FileName>Core\Room\RoomAbstract.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="ServerGame.IBuddy" Collapsed="true">
+    <Position X="13.75" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IBuddy.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ServerGame.IData">
+    <Position X="14.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interface\Connctions\IData.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ServerGame.Ievnet" Collapsed="true">
+    <Position X="15.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interface\Event\IEvnet.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ServerGame.IUser" Collapsed="true">
+    <Position X="13.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interface\User\IUser.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ServerGame.IZone" Collapsed="true">
+    <Position X="15.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIACAgCAAAIAAAEAEAAIAAACABAAAAQAQAAEABAAAIg=</HashCode>
+      <FileName>IZone.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ServerGame.Interface.Connctions.IServer" Collapsed="true">
+    <Position X="9.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAQAAAAABAAAAAAAAAAAAAEAAAEAAAAAAAA=</HashCode>
+      <FileName>Interface\Connctions\IServer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ServerGame.Interface.MEF.IMetaData">
+    <Position X="0.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interface\MEF\IMetaDataType.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ServerGame.Interface.MEF.IMEF">
+    <Position X="0.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAAAQAAAAAACAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interface\MEF\IMEF.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ServerGame.Interface.Permissions.IPermissions" Collapsed="true">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interface\Permissions\IPermissions.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ServerGame.Interface.Permissions.IPermissionsUser" Collapsed="true">
+    <Position X="6.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interface\Permissions\IPermissionsUser.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ServerGame.Interface.Permissions.IPermissionsZone" Collapsed="true">
+    <Position X="4.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interface\Permissions\IPermissionsZone.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ServerGame.Interface.Room.IRoom" Collapsed="true">
+    <Position X="10.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAKAAAAEAAAAAAAABAAAkQAgBAAAAAQBAAACAAACAA=</HashCode>
+      <FileName>Interface\Room\IRoom.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="ServerGame.Interface.Connctions.ConnctionType">
+    <Position X="9.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAIAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interface\Connctions\ConnctionType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
