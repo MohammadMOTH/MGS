@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using ServerGame.Permissions;
+using ServerGame.Interface.Permissions;
+using ServerGame.Interface.Room;
+
 namespace ServerGame
 {
     /// <summary>
     /// 
     /// </summary>
-    interface IZone
+  public  interface IZone
     {
 
         /// <summary>
