@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using ServerGame.Interface.Permissions;
+using ServerGame.Event;
 
 namespace ServerGame.Program.Room
 {
@@ -50,6 +51,11 @@ namespace ServerGame.Program.Room
         public override bool _CheckPermissionsUser(IUser InputUserToSendData)
         {
             throw new NotImplementedException();
+        }
+
+        public void OnMessageSent(object source, MessageSenderEventArgs args)
+        {
+            Console.WriteLine("Message Service: Sending An Enail...." + args.message);
         }
     }
 }
