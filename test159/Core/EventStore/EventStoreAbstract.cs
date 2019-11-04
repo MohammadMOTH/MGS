@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using ServerGame.Interface.EventStore;
+using ServerGame.Interface.Event;
 
 namespace ServerGame.Core.EventStore
 {
