@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using ServerGame.Event;
+using ServerGame.Program.Event;
 using ServerGame.Program.Data;
+using ServerGame.Interface.Data;
 
 namespace ServerGame.Interface.Event
 {
-    public interface IMessageSender : Ievnet
+    public interface IMessageSender : Ievnet,IEventData<Message>
     {
         #region Public_event
         /// <summary>
