@@ -4,6 +4,8 @@ using System.Text;
 using ServerGame.Interface.Permissions;
 using ServerGame.Interface.Room;
 using ServerGame;
+using ServerGame.Interface.Event;
+
 namespace ServerGame.Core.Room
 {
     public abstract class RoomAbstract : IRoom
