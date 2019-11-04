@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using ServerGame.Interface.Permissions;
-using ServerGame.Event;
+using ServerGame.Program.Event;
+using ServerGame.Interface.Event;
 
 namespace ServerGame.Program.Room
 {
@@ -55,7 +56,7 @@ namespace ServerGame.Program.Room
 
         public void OnMessageSent(object source, MessageSenderEventArgs args)
         {
-            Console.WriteLine("Message Service: Sending An Enail...." + args.message);
+            Console.WriteLine("Message Service: Sending An Email...." + args.Message.message);
         }
     }
 }
