@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using ServerGame.Interface.Data;
 
-namespace ServerGame
+namespace ServerGame.Interface.Event
 {
   public interface Ievnet
     {
@@ -11,6 +12,7 @@ namespace ServerGame
         /// Name of Event
         /// </summary>
         public string EventName { get; set; }
+
         #endregion
 
 
