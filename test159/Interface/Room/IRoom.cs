@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using ServerGame.Interface.Permissions;
+using ServerGame.Interface.Event;
+
 namespace ServerGame.Interface.Room
 {
   public interface IRoom
