@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using ServerGame.Interface.Event;
+using ServerGame.Interface.Data;
 
 namespace ServerGame.Interface.EventStore
 {
@@ -16,7 +17,7 @@ namespace ServerGame.Interface.EventStore
         /// Method To Parse Inputed Data Parameter Then Fire The Right Event Based On Data
         /// </summary>
         /// <param name="data">Which it Get From Connection To Check Which Event Should Raise</param>
-        public void Parser(IData data);
+        public void Parser(ICustomeData data, IEnumerable<Type> list);
 
     }
 }
