@@ -4,11 +4,12 @@ using System.Text;
 
 namespace ServerGame.Interface.Data
 {
-    public interface IEventData<T>
+    public interface IEventData<T>: ICustomeData
     {
         /// <summary>
         /// Data of Event
         /// </summary>
-        public IEventData<T> Data { get; }
+        public T Data { get; set; }
+
     }
 }
