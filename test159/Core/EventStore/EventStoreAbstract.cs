@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using ServerGame.Interface.EventStore;
 using ServerGame.Interface.Event;
+using ServerGame.Interface.Data;
 
 namespace ServerGame.Core.EventStore
 {
@@ -12,6 +13,6 @@ namespace ServerGame.Core.EventStore
         public List<Ievnet> StoredEvent { get => _storedEvent; set => _storedEvent = value; }
         
 
-        public abstract void Parser(IData data);
+        public abstract void Parser(ICustomeData data, IEnumerable<Type> list);
     }
 }
