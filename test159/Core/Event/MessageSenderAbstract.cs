@@ -14,8 +14,9 @@ namespace ServerGame.Core.Event
         private string _eventName;
         public string EventName { get => _eventName; set => _eventName = value; }
 
-        private IEventData<Message>  _data;
-        public IEventData<Message> Data { get => _data; }
+
+        private Message _data;
+        public Message Data { get => _data; set => _data = value; }
 
         public abstract event EventHandler<MessageSenderEventArgs> MessageSending;
         public abstract event EventHandler<MessageSenderEventArgs> MessageSent;
