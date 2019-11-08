@@ -5,7 +5,7 @@ using ServerGame.Interface.Data;
 
 namespace ServerGame.Interface.Event
 {
-  public interface Ievnet
+  public interface Ievnet<T>
     {
         #region Public_var
         /// <summary>
@@ -13,35 +13,25 @@ namespace ServerGame.Interface.Event
         /// </summary>
         public string EventName { get; set; }
 
+        public ICustomeData Data { get; set; }
+
         #endregion
 
-
-        #region Suggestion
-        // Mr.Mohammad Please Note The Bottom Code Is Just Suggestion So If It's Not Important You Can Delete It, Thanks
-        // Mr.Mohammad Please Note The Bottom Code Is Just Suggestion So If It's Not Important You Can Delete It, Thanks
-        // Mr.Mohammad Please Note The Bottom Code Is Just Suggestion So If It's Not Important You Can Delete It, Thanks
-
+        #region Public_Method
 
         /// <summary>
-        /// This Event Raising Before sending the message
+        /// This Event Raising When Sendign Your Data
         /// </summary>
-        //public event EventHandler<T> BeforeRaising;
+        /// <param name="T">Put Your Data Type Which Will Sending With Event</param>
+        public event EventHandler<T> Send;
 
-        /// <summary>
-        /// This Event Raising After sending the message
-        /// </summary>
-        //public event EventHandler<T> After;
 
         /// <summary>
         /// This Method Use For Raising The Event Before sending the message
         /// </summary>
-        //public void OnBefore(object o);
-
-        /// <summary>
-        /// This Method Use For Raising The Event After sending the message
-        /// </summary>
-        //public void OnAfter(object o);
-
+        /// <param name="sender">Represent The Object Which Will be The Publisher That Will Sending Event Data</param>
+        /// <param name="arg">Represent The Custome Type Of Data Which Will Be Sending Throwgh Event</param>
+        public void OnSending(object sender, T arg);
         #endregion
     }
 }
