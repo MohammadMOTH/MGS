@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="ServerGame.Program">
+  <Class Name="ServerGamex.Test">
     <Position X="9.5" Y="1.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
-      <FileName>Program.cs</FileName>
+      <FileName>Test.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ServerGame.Core.MEF.MEFAbstract">
@@ -25,7 +25,7 @@
   <Class Name="ServerGame.Core.Room.RoomAbstract">
     <Position X="12.25" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>BACKAAAAEAAAAAAAABAAAkQQgBAEAAAUBAAAGAAACgA=</HashCode>
+      <HashCode>BAAKAAAAEAAAAAAAABAAAkQAgBAAAAAQBAAACAAACAA=</HashCode>
       <FileName>Core\Room\RoomAbstract.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -61,7 +61,7 @@
   <Interface Name="ServerGame.IZone" Collapsed="true">
     <Position X="15.75" Y="2" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AIACAgCAAAIAAAEAEAAIAAACABAAAAQAQAAEABAAAIg=</HashCode>
+      <HashCode>AAACAgAAAAICAAEgEAAIAAACAgAAAAQAQAAEABAAAIg=</HashCode>
       <FileName>IZone.cs</FileName>
     </TypeIdentifier>
   </Interface>

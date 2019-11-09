@@ -4,7 +4,7 @@ using System.Text;
 using ServerGame.Interface.Permissions;
 namespace ServerGame.Interface.Room
 {
-  public interface IRoom
+   interface IRoom
     {
         #region Public_var
 
@@ -28,7 +28,7 @@ namespace ServerGame.Interface.Room
         /// <summary>
         ///  Permissions to inspict 
         /// </summary>
-        public IPermissionsUser PermissionsUser { get; set; }
+         IPermissionsUser PermissionsUser { get; set; }
 
 
         /// <summary>
@@ -56,11 +56,11 @@ namespace ServerGame.Interface.Room
         /// <summary>
         /// All evnets type and methods of envets
         /// </summary>
-        List<Ievnet> _MyEvnets { get; set; }
+        protected List<Ievnet> _MyEvnets { get; set; }
         /// <summary>
         /// Zone Info
         /// </summary>
-       public IZone IZone { get;  set; }
+        IZone IZone { get;  set; }
 
         #endregion
 
@@ -100,21 +100,21 @@ namespace ServerGame.Interface.Room
         /// </summary>
         /// <param name="InputUserToSendData">user ,for check if is on black list </param>
         /// <returns>true is black , </returns>
-        bool _CheckBlackList(IUser InputUserToSendData);
+        protected bool _CheckBlackList(IUser InputUserToSendData);
 
         /// <summary>
         /// Check If User on Permission list
         /// </summary>
         /// <param name="InputUserToSendData">user ,for check if is on Permission list </param>
         /// <returns>true blacked ,false not blacked </returns>
-        bool _CheckPermissionsUser(IUser InputUserToSendData);
+        protected bool _CheckPermissionsUser(IUser InputUserToSendData);
 
         /// <summary>
         /// Add New User To list
         /// </summary>
         /// <param name="User"></param>
         /// <returns>true added , false not added </returns>
-        bool _AddNewUser(IUser User);
+        protected bool _AddNewUser(IUser User);
         #endregion
 
 

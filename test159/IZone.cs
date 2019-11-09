@@ -9,7 +9,7 @@ namespace ServerGame
     /// <summary>
     /// 
     /// </summary>
-  public  interface IZone
+    interface IZone
     {
 
         /// <summary>
@@ -19,7 +19,7 @@ namespace ServerGame
         /// <summary>
         /// Permissions If Zone
         /// </summary>
-        public List<IPermissionsZone> PermissionsZone { get; protected set; }
+         List<IPermissionsZone> PermissionsZone { get; protected set; }
         /// <summary>
         /// Name Of Zone
         /// </summary>

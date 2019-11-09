@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.29411.108
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServerGame", "test159\ServerGame.csproj", "{52047EFE-B70F-490C-A76C-723858E1D408}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerGamePlugin", "ServerGamePlugin\ServerGamePlugin.csproj", "{0978F68C-990A-4471-8B8D-A457397E560B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServerGamePlugin", "ServerGamePlugin\ServerGamePlugin.csproj", "{0978F68C-990A-4471-8B8D-A457397E560B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csproj", "{D0A795DE-D091-4711-B714-EBF4BC32449B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{0978F68C-990A-4471-8B8D-A457397E560B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0978F68C-990A-4471-8B8D-A457397E560B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0978F68C-990A-4471-8B8D-A457397E560B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0A795DE-D091-4711-B714-EBF4BC32449B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0A795DE-D091-4711-B714-EBF4BC32449B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0A795DE-D091-4711-B714-EBF4BC32449B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0A795DE-D091-4711-B714-EBF4BC32449B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

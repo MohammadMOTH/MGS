@@ -7,7 +7,7 @@
     <RootNamespace>ServerGame</RootNamespace>
     <DocumentationFile></DocumentationFile>
     <ApplicationIcon />
-    <StartupObject>ServerGame.Test</StartupObject>
+    <StartupObject></StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,12 +17,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.ComponentModel.Composition" Version="4.6.0" />
+    <Folder Include="Core\Permissions\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Core\Connctions\" />
-    <Folder Include="Core\Permissions\" />
+    <PackageReference Include="CommandLineParser" Version="2.6.0" />
   </ItemGroup>
 
 </Project>

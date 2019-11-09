@@ -4,7 +4,15 @@ using System.Text;
 
 namespace ServerGame.Interface.Permissions
 {
-   public interface IPermissions
+    interface IPermissions
     {
+
+
+
+        bool CanAddNewUser { get; }
+
+        bool CanAddNewRoom { get;  }
+
+
     }
 }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ServerGame.Interface.Connctions
 {
-    internal enum ConnctionType
+    public enum ConnctionType
     {
         TCP,
         UDP

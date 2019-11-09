@@ -1,15 +1,13 @@
 ﻿using ServerGame.Interface.Room;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
-using System.ComponentModel.Composition.Hosting;
 using System.Reflection;
 using System.Text;
 
 namespace ServerGame.Interface.MEF
 {
     interface IMEF
-    {
+    {/*
        private static CompositionContainer  _container { get; set; }
 
         public static void LoadDllFiles(object classs)
@@ -54,7 +52,7 @@ namespace ServerGame.Interface.MEF
             }
 
         }
-
+        */
 
     }
 }

@@ -8,30 +8,45 @@ namespace ServerGame.Core.Room
 {
     public abstract class RoomAbstract : IRoom
     {
-        private int zone;
-        private int id;
-        private int dataend;
-        private int datastart;
-        private int maxplayers;
-        private int name;
-        private int permissionsuser;
+        string IRoom.Name { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        int IRoom.Id { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        int IRoom.MaxPlayers { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        IPermissionsUser IRoom.PermissionsUser { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        List<IUser> IRoom.UserInRoom { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        DateTime IRoom.DateStart { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        DateTime IRoom.DataEnd { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        List<Ievnet> IRoom._MyEvnets { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        IZone IRoom.IZone { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
+        bool IRoom.AddEventListener(Ievnet evnet)
+        {
+            Console.WriteLine("fuxxxck");
+            return false;
+        }
 
-        public abstract string Name { get; set; }
-        public abstract int Id { get; set; }
-        public abstract int MaxPlayers { get; set; }
-        public abstract IPermissionsUser PermissionsUser { get; set; }
-        public abstract List<IUser> UserInRoom { get; set; }
-        public abstract DateTime DateStart { get; set; }
-        public abstract DateTime DataEnd { get; set; }
-        public abstract List<Ievnet> _MyEvnets { get; set; }
-        public  IZone IZone { get; set; }
+        bool IRoom.JoinUserToRoom(IUser User)
+        {
+            throw new NotImplementedException();
+        }
 
-        public abstract bool AddEventListener(Ievnet evnet);
-        public abstract bool JoinUserToRoom(IUser User);
-        public abstract bool Test();
-        public abstract bool _AddNewUser(IUser User);
-        public abstract bool _CheckBlackList(IUser InputUserToSendData);
-        public abstract bool _CheckPermissionsUser(IUser InputUserToSendData);
+        bool IRoom.Test()
+        {
+            throw new NotImplementedException();
+        }
+
+        bool IRoom._AddNewUser(IUser User)
+        {
+            throw new NotImplementedException();
+        }
+
+        bool IRoom._CheckBlackList(IUser InputUserToSendData)
+        {
+            throw new NotImplementedException();
+        }
+
+        bool IRoom._CheckPermissionsUser(IUser InputUserToSendData)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
