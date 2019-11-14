@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using ServerGame.Interface.Connctions;
 using System.IO.Compression;
 using System.IO;
-
+using ServerGame.Core.Data;
 
 namespace ServerGame.Core.Connctions
 {
@@ -23,14 +23,16 @@ namespace ServerGame.Core.Connctions
             public const int BufferSize = 1024;
  
             public byte[] buffer = new byte[BufferSize];
+            //    public StringBuilder sb = new StringBuilder();
+            public List<byte> ListOfByteReciver = new List<byte>();
 
-            public StringBuilder sb = new StringBuilder();
             public int alldatasqmant = 0;
             public int Nowdatasqmant = 0;
 
+            public ManualResetEvent StopAndLoopReading = new ManualResetEvent(false);
+
+
         }
-
-
         /// <summary>
         /// listeners pointer looping
         /// </summary>
@@ -51,12 +53,10 @@ namespace ServerGame.Core.Connctions
         /// </summary>
         public int TCPPort { get; protected set; }
 
-
         /// <summary>
         /// replay form sender to looping<
         /// </summary>
         public bool LoopBack { get; protected set; }
-
 
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace ServerGame.Core.Connctions
 
             try
             {
-                IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName()); 
+            IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName()); 
             IPAddress ipAddress = ipHostInfo.AddressList[1]; 
             IPEndPoint localEndPoint = new IPEndPoint(ipAddress, TCPPort);
         
@@ -101,10 +101,7 @@ namespace ServerGame.Core.Connctions
                 await Task.Run(() =>
                 {
                     while (true)
-                    {
-
-
-                      
+                    { 
                         Console.WriteLine("Waiting ..." );
                          StopAndLoop.Reset(); 
                           listener.BeginAccept(
@@ -151,10 +148,10 @@ namespace ServerGame.Core.Connctions
             }
         }
 
-        public static T Deserialize<T>( byte[] bytes )
+        public static B Deserialize<B>( byte[] bytes )
         {
             using (var memoryStream = new MemoryStream(bytes))
-                return (T)(new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter()).Deserialize(memoryStream);
+                return (B) (new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter()).Deserialize(memoryStream);
         }
 
 
@@ -183,12 +180,20 @@ namespace ServerGame.Core.Connctions
             Socket handler = listener.EndAccept(ar);
             listeners.Add(handler);
                 
-               StateObject state = new StateObject();
+            StateObject state = new StateObject();
             state.workSocket = handler;
           
+
             Task.Run(() =>
             {
+                agen:
+
+                state.StopAndLoopReading.Reset();
+              if (   SocketConnected (state.workSocket) )
                     handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0, new AsyncCallback(ReadCallback), state);
+                state.StopAndLoopReading.WaitOne();
+
+                goto agen;
             });
 
 
@@ -201,72 +206,165 @@ namespace ServerGame.Core.Connctions
         /// <param name="ar">its for handle async with StateObject class </param>
         protected  void ReadCallback(IAsyncResult ar)
         {
-          //  StopAndLoopudb.Set();
+            //  StopAndLoopudb.Set();
+            StateObject state = (StateObject)ar.AsyncState;
             try
             {
                 String content = String.Empty;
-              
-                StateObject state = (StateObject)ar.AsyncState;
-                if (state.alldatasqmant==0)
-                state.sb.Clear(); // اتوقع هذا افضل من ناحية الذاكرة
-               // state.sb = new StringBuilder();
-
-                Socket handler = state.workSocket;
                 
-               if (!handler.Connected)
+            
+            
+          /*      if (state.alldatasqmant == 0) { 
+                state.ListOfByteReciver.Clear(); // اتوقع هذا افضل من ناحية الذاكرة
+               // state.sb = new StringBuilder();
+                }*/
+
+
+                if (!SocketConnected (state.workSocket))
                    return;
                 // Read data from the client socket.   
-                int bytesRead = handler.EndReceive(ar);
+                int bytesRead = state.workSocket.EndReceive(ar);
             
                 if (bytesRead > 0)
                 {
+                    HaveMorData:
 
-                    if (state.alldatasqmant == 0) {
-                        state.Nowdatasqmant += bytesRead - 4;
-                        byte[] maxbytes = new byte[4];
-                        Array.Copy(state.buffer, 0, maxbytes, 0, 4);
+                    if (state.alldatasqmant == 0)
+                    {
+                        if (state.ListOfByteReciver.Count == 0)
+                        {
+                            state.Nowdatasqmant += bytesRead - 4;
+                            byte[] maxbytes = new byte[4];
+                           
+                            Array.Copy(state.buffer, 0, maxbytes, 0, 4);
 
-                        state.alldatasqmant = BitConverter.ToInt32(maxbytes, 0);
-                    } else
+                            state.alldatasqmant = BitConverter.ToInt32(maxbytes, 0);
+
+                            
+                            for (int i = 4; i < bytesRead; i++)
+                            {
+                                state.ListOfByteReciver.Add(state.buffer[i]);
+                            }
+                            Array.Clear(state.buffer, 0, state.buffer.Length);
+                            bytesRead -= 4;
+                            Array.Clear(maxbytes, 0, maxbytes.Length);
+                            maxbytes = null;
+                            Array.Clear(state.buffer, 0, state.buffer.Length);
+
+                           
+
+                        }
+                        else
+                        {
+                            state.Nowdatasqmant += bytesRead - 4;
+                            byte[] maxbytes = new byte[4];
+
+                            for (int i = 0; i < bytesRead; i++)
+                            {
+                                state.ListOfByteReciver.Add(state.buffer[i]);
+                            }
+                            Array.Clear(state.buffer, 0, state.buffer.Length);
+
+                            Array.Copy(state.ListOfByteReciver.GetRange(0,4).ToArray(), 0, maxbytes, 0, 4);
+                            state.alldatasqmant = BitConverter.ToInt32(maxbytes, 0);
+
+                            state.ListOfByteReciver.RemoveRange(0, 4);
+
+                            Array.Clear(maxbytes, 0, maxbytes.Length);
+                            maxbytes = null;
+                            Array.Clear(state.buffer, 0, state.buffer.Length);
+                            bytesRead -= 4;
+
+
+                        }
+                    }
+                    else
+                    {
                         state.Nowdatasqmant += bytesRead;
+
+
+                        for (int i = 0; i < bytesRead; i++)
+                        {
+                            state.ListOfByteReciver.Add(state.buffer[i]);
+                        }
+                        Array.Clear(state.buffer, 0, state.buffer.Length);
+                    }
 
                   
                         if (!this.Enblie_Gzip)
                         {
-                            state.sb.Append(Encoding.ASCII.GetString(state.buffer, 4, bytesRead- 4));
+
+                          
+                           
+
                         }
                         else
                         {
+                        /*
                             byte[] temp = Decompress(state.buffer);
-                            state.sb.Append(Encoding.ASCII.GetString(temp, 0, temp.Length));
+                            state.ListOfByteReciver.Append(Encoding.ASCII.GetString(temp, 0, temp.Length));
+                             Array.Clear(temp, 0, temp.Length);*/
                         }
 
                     if (state.alldatasqmant == state.Nowdatasqmant)
                     {
-                  
-                    content = state.sb.ToString();
+                      
+                           var temp = state.ListOfByteReciver.ToArray();
+                        PackSendData PackSendData = Deserialize<PackSendData>(temp);
+                        EventStore.EventStore.Parser(PackSendData, ref state);
 
-                    Console.WriteLine("Read {0} bytes from socket. \n Data : {1}",
+                        Array.Clear(temp, 0, temp.Length);
+                      
+                        temp = null;
+
+
+                        Console.WriteLine("Read {0} bytes from socket. \n Data : {1}",
                         state.alldatasqmant, content);
                         state.alldatasqmant = 0;
                         state.Nowdatasqmant = 0;
+                        state.ListOfByteReciver.Clear();
                     }
 
-                    if (handler.Connected)
+
+                    else if (state.alldatasqmant < state.Nowdatasqmant && state.ListOfByteReciver.Count >= state.alldatasqmant)
+                    {
+                        
+                        var temp = state.ListOfByteReciver.GetRange(0, state.alldatasqmant ).ToArray();
+
+                        PackSendData PackSendData = Deserialize< PackSendData>(temp);
+                        EventStore.EventStore.Parser( PackSendData,ref state);
+
+                        Array.Clear(temp, 0, temp.Length);
+
+                        temp = null;
+
+
+                        Console.WriteLine("Read {0} bytes from socket. \n Data : {1}",
+                        state.alldatasqmant, content);
+                        state.ListOfByteReciver.RemoveRange(0, state.alldatasqmant);
+                        
+                        state.Nowdatasqmant -= state.alldatasqmant;
+                        state.alldatasqmant = 0;
+                        bytesRead = 0;
+
+                        goto HaveMorData;
+                    }
+
+                    if (SocketConnected (state.workSocket)) // TODO :تعديل هنا لتحديد هل هناك اتصال ام لا 
                         if (LoopBack)
-                          Send(handler, content);
+                          Send(state.workSocket, content);
                             
 
                 }
-                if (handler.Connected)
-                    handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
-                                new AsyncCallback(ReadCallback), state);
+                
+              
 
             } catch (Exception e )
             {
                 Console.WriteLine(e.ToString());
 
             }
+            state.StopAndLoopReading.Set();
         }
 
         /// <summary>

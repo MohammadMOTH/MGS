@@ -4,6 +4,13 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <StartupObject>Client.AsynchronousClient</StartupObject>
+    <ApplicationIcon />
   </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="ServerGame">
+      <HintPath>..\test159\bin\Debug\netcoreapp3.0\ServerGame.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 
 </Project>

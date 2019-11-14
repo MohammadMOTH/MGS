@@ -2,27 +2,29 @@
 using System.Collections.Generic;
 using System.Text;
 using ServerGame.Interface.Permissions;
+using ServerGame.Interface.Event;
+
 namespace ServerGame.Interface.Room
 {
-   interface IRoom
+  public interface IRoom
     {
-        #region Public_var
+        #region _var
 
       
 
         /// <summary>
         /// Name of Room
         /// </summary>
-        public string Name { get; set; }
+         string Name { get; set; }
         /// <summary>
         /// Id of Room
         /// </summary>
-        public int Id { get; set; }
+         int Id { get; set; }
 
         /// <summary>
         /// Max players can join in this room
         /// </summary>
-        public int MaxPlayers { get; set; }
+         int MaxPlayers { get; set; }
 
 
         /// <summary>
@@ -34,17 +36,17 @@ namespace ServerGame.Interface.Room
         /// <summary>
         /// list of user in this room
         /// </summary>
-        public List<IUser> UserInRoom {  get;  set; }
+         List<IUser> UserInRoom {  get;  set; }
 
         /// <summary>
         /// start time this room
         /// </summary>
-        public DateTime DateStart { get; set; }
+         DateTime DateStart { get; set; }
 
         /// <summary>
         /// time to end this room
         /// </summary>
-        public DateTime DataEnd { get; set; }
+         DateTime DataEnd { get; set; }
 
 
 
@@ -56,7 +58,7 @@ namespace ServerGame.Interface.Room
         /// <summary>
         /// All evnets type and methods of envets
         /// </summary>
-        protected List<Ievnet> _MyEvnets { get; set; }
+        List<Ievnet<object>> _MyEvnets { get; set; }
         /// <summary>
         /// Zone Info
         /// </summary>
@@ -64,14 +66,14 @@ namespace ServerGame.Interface.Room
 
         #endregion
 
-        #region Public_Method
+        #region _Method
 
         /// <summary>
         /// Add new event to Listener 
         /// </summary>
         /// <param name="evnet"></param>
         /// <returns></returns>
-        public bool AddEventListener(Ievnet evnet);
+         bool AddEventListener(Ievnet<object> evnet);
 
 
         /// <summary>
@@ -79,14 +81,14 @@ namespace ServerGame.Interface.Room
         /// </summary>
         /// <param name="User"></param>
         /// <returns></returns>
-        public bool JoinUserToRoom(IUser User);
+         bool JoinUserToRoom(IUser User);
 
         /// <summary>
         /// here we can add new user to my room and check all berfor
         /// </summary>
         /// <param name="User"></param>
         /// <returns></returns>
-        public bool Test();
+         bool Test();
         #endregion
 
 
@@ -100,21 +102,21 @@ namespace ServerGame.Interface.Room
         /// </summary>
         /// <param name="InputUserToSendData">user ,for check if is on black list </param>
         /// <returns>true is black , </returns>
-        protected bool _CheckBlackList(IUser InputUserToSendData);
+         bool _CheckBlackList(IUser InputUserToSendData);
 
         /// <summary>
         /// Check If User on Permission list
         /// </summary>
         /// <param name="InputUserToSendData">user ,for check if is on Permission list </param>
         /// <returns>true blacked ,false not blacked </returns>
-        protected bool _CheckPermissionsUser(IUser InputUserToSendData);
+         bool _CheckPermissionsUser(IUser InputUserToSendData);
 
         /// <summary>
         /// Add New User To list
         /// </summary>
         /// <param name="User"></param>
         /// <returns>true added , false not added </returns>
-        protected bool _AddNewUser(IUser User);
+         bool _AddNewUser(IUser User);
         #endregion
 
 

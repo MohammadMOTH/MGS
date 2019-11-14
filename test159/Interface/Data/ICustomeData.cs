@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ServerGame
+namespace ServerGame.Interface.Data
 {
-  public  interface IData
+    public interface ICustomeData
     {
+
+
+
     }
 }

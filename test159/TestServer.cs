@@ -6,107 +6,34 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using CommandLine;
+using ServerGame.Core.EventStore;
 
-namespace ServerGamex
+namespace ServerGame
 {
- 
-        [Verb("start", HelpText = "Start Server For listern")]
-        public class startServer
-       {
-        /*
-            [Option('u', "udpport", Required = false, HelpText = "udp prot for start server")]
-            public IEnumerable<int> udpport { get; set; }
 
-            [Option('t', "tcpport", Required = false, HelpText = "Tcp prot for start server")]
-            public IEnumerable<int> tcpport { get; set; }
-
-            [Option('l', "loopback", Required = false, HelpText = "Return SendBack From/to Server to same client has been sent")]
-            public IEnumerable<bool> loopback { get; set; }
-
-
-            [Option('z', "Gzip", Required = false, HelpText = "Compress and decompress data mode for more speed")]
-            public IEnumerable<bool> Gzip { get; set; }*/
-
-
-        
-                [Option('u', "udpport", Default = 9998, HelpText = "udp prot for start server")]
-                public int udpport { get; set; }
-
-                [Option('t', "tcpport", Default =9999, HelpText = "Tcp prot for start server")]
-                public int tcpport { get; set; }
-
-                [Option('l', "loopback", Default = false, HelpText = "Return SendBack From/to Server to same client has been sent")]
-                public bool loopback { get; set; }
-
-
-                [Option( 'z' , "gzip", Default = false,  HelpText = "Compress and decompress data mode for more speed")]
-                public bool Gzip { get; set; }
-
-        /*
-               [Option(
-                 Default = false,
-                 HelpText = "Prints all messages to standard output.")]
-               public bool Verbose { get; set; }
-
-
-               [Option("stdin",
-                 Default = false,
-                 HelpText = "Read from stdin")]
-
-
-               public bool stdin { get; set; }
-
-               [Value(0, MetaName = "offset", HelpText = "File offset.")]
-               public long? Offset { get; set; }*/
-        //normal options here
-    }
-
-    [Verb("show-all", HelpText = "Show all connction now on server")]
-        public class ShowAllConnctions
-        {
-            [Option(
-            'S', "StopAll",
-          Default = false,
-          HelpText = "Prints all messages to standard output.")]
-            public bool StopAll { get; set; }
-        }
-
-
-        [Verb("exit", HelpText = "Starting exit methods")]
-        public class Exit
-        {/*
-            [Option(
-          Default = false,
-          HelpText = "Prints all messages to standard output.")]
-            public bool Verbose { get; set; } */
-        }
-
-
-        [Verb("sendstring", HelpText = "send string method")]
-        public class sendstring
-        {
-            [Option('c', "Id list", Default = false, HelpText = "Id list")]
-            public int idlist { get; set; }
-
-            [Option('d', "Data", Default = false, HelpText = "Data string")]
-            public string data { get; set; }
-        }
-
-
-
-
-
-
-    class Test
+    public class TestServer
     {
 
 
         static  int port_tcp = 9999;
         static  int port_udp  = 9998;
         static ServerGame.Program.Connctions.Server server;
-
-        static async Task Main(string[] args)
+        static void init()
         {
+         
+
+
+        }
+        public static void Main(string[] args)
+        {
+
+            EventStore.AddNewEvent(new Core.Event.Event());
+
+
+
+
+
+
             Console.ForegroundColor = ConsoleColor.White;
             
             while (true)
@@ -116,7 +43,7 @@ namespace ServerGamex
                 var consoleRead = Console.ReadLine();
                 if (consoleRead.Trim().TrimStart().TrimEnd().Length != 0)
                 {
-                        {
+                      
                       
                     var ff = CommandLine.Parser.Default.ParseArguments<
                             startServer,
@@ -142,7 +69,7 @@ namespace ServerGamex
                         System.GC.Collect();
 
 
-                    }
+                   
                 
                     
                 }
@@ -262,6 +189,88 @@ namespace ServerGamex
     }
 
 
-  
+    [Verb("start", HelpText = "Start Server For listern")]
+    public class startServer
+    {
+        /*
+            [Option('u', "udpport", Required = false, HelpText = "udp prot for start server")]
+            public IEnumerable<int> udpport { get; set; }
+
+            [Option('t', "tcpport", Required = false, HelpText = "Tcp prot for start server")]
+            public IEnumerable<int> tcpport { get; set; }
+
+            [Option('l', "loopback", Required = false, HelpText = "Return SendBack From/to Server to same client has been sent")]
+            public IEnumerable<bool> loopback { get; set; }
+
+
+            [Option('z', "Gzip", Required = false, HelpText = "Compress and decompress data mode for more speed")]
+            public IEnumerable<bool> Gzip { get; set; }*/
+
+
+
+        [Option('u', "udpport", Default = 9998, HelpText = "udp prot for start server")]
+        public int udpport { get; set; }
+
+        [Option('t', "tcpport", Default = 9999, HelpText = "Tcp prot for start server")]
+        public int tcpport { get; set; }
+
+        [Option('l', "loopback", Default = false, HelpText = "Return SendBack From/to Server to same client has been sent")]
+        public bool loopback { get; set; }
+
+
+        [Option('z', "gzip", Default = false, HelpText = "Compress and decompress data mode for more speed")]
+        public bool Gzip { get; set; }
+
+        /*
+               [Option(
+                 Default = false,
+                 HelpText = "Prints all messages to standard output.")]
+               public bool Verbose { get; set; }
+
+
+               [Option("stdin",
+                 Default = false,
+                 HelpText = "Read from stdin")]
+
+
+               public bool stdin { get; set; }
+
+               [Value(0, MetaName = "offset", HelpText = "File offset.")]
+               public long? Offset { get; set; }*/
+        //normal options here
+    }
+
+    [Verb("show-all", HelpText = "Show all connction now on server")]
+    public class ShowAllConnctions
+    {
+        [Option(
+        'S', "StopAll",
+      Default = false,
+      HelpText = "Prints all messages to standard output.")]
+        public bool StopAll { get; set; }
+    }
+
+
+    [Verb("exit", HelpText = "Starting exit methods")]
+    public class Exit
+    {/*
+            [Option(
+          Default = false,
+          HelpText = "Prints all messages to standard output.")]
+            public bool Verbose { get; set; } */
+    }
+
+
+    [Verb("sendstring", HelpText = "send string method")]
+    public class sendstring
+    {
+        [Option('c', "id-list", Default = false, HelpText = "Id Client From list")]
+        public int idlist { get; set; }
+
+        [Option('d', "data", Default = false, HelpText = "Data string")]
+        public string data { get; set; }
+    }
+
+
 
 }

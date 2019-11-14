@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using ServerGame.Interface.Permissions;
+using ServerGame.Program.Event;
+using ServerGame.Interface.Event;
 
 namespace ServerGame.Program.Room
 {
@@ -14,7 +16,7 @@ namespace ServerGame.Program.Room
         public  List<IUser> UserInRoom { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public  DateTime DateStart { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public  DateTime DataEnd { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        protected  List<Ievnet> _MyEvnets { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        protected  List<Ievnet<object>> _MyEvnets { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         
         public Room ()
         {
@@ -22,7 +24,7 @@ namespace ServerGame.Program.Room
 
 
         }
-        public  bool AddEventListener(Ievnet evnet)
+        public  bool AddEventListener(Ievnet<object> evnet)
         {
             Console.WriteLine("fuck");
             return false;
@@ -51,6 +53,11 @@ namespace ServerGame.Program.Room
         protected  bool _CheckPermissionsUser(IUser InputUserToSendData)
         {
             throw new NotImplementedException();
+        }
+
+        public void OnMessageSent(object source, MessageSenderEventArgs args)
+        {
+            Console.WriteLine("Message Service: Sending An Email...." + args.Message.message);
         }
     }
 }

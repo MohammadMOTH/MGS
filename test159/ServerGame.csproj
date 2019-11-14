@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <Folder Include="Core\Permissions\" />
+    <Folder Include="Program\EventStore\" />
   </ItemGroup>
 
   <ItemGroup>

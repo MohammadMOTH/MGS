@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ServerGame.Interface.Permissions
 {
-    interface IPermissions
+ public   interface IPermissions
     {
 
 

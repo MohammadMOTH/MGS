@@ -4,47 +4,48 @@ using System.Text;
 using ServerGame.Interface.Permissions;
 using ServerGame.Interface.Room;
 using ServerGame;
+using ServerGame.Interface.Event;
+
 namespace ServerGame.Core.Room
 {
     public abstract class RoomAbstract : IRoom
     {
-        string IRoom.Name { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        int IRoom.Id { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        int IRoom.MaxPlayers { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        IPermissionsUser IRoom.PermissionsUser { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        List<IUser> IRoom.UserInRoom { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        DateTime IRoom.DateStart { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        DateTime IRoom.DataEnd { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        List<Ievnet> IRoom._MyEvnets { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        IZone IRoom.IZone { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string Name { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public int Id { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public int MaxPlayers { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IPermissionsUser PermissionsUser { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public List<IUser> UserInRoom { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public DateTime DateStart { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public DateTime DataEnd { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public List<Ievnet<object>> _MyEvnets { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IZone IZone { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-        bool IRoom.AddEventListener(Ievnet evnet)
-        {
-            Console.WriteLine("fuxxxck");
-            return false;
-        }
-
-        bool IRoom.JoinUserToRoom(IUser User)
+        public bool AddEventListener(Ievnet<object> evnet)
         {
             throw new NotImplementedException();
         }
 
-        bool IRoom.Test()
+        public bool JoinUserToRoom(IUser User)
         {
             throw new NotImplementedException();
         }
 
-        bool IRoom._AddNewUser(IUser User)
+        public bool Test()
         {
             throw new NotImplementedException();
         }
 
-        bool IRoom._CheckBlackList(IUser InputUserToSendData)
+        public bool _AddNewUser(IUser User)
         {
             throw new NotImplementedException();
         }
 
-        bool IRoom._CheckPermissionsUser(IUser InputUserToSendData)
+        public bool _CheckBlackList(IUser InputUserToSendData)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool _CheckPermissionsUser(IUser InputUserToSendData)
         {
             throw new NotImplementedException();
         }

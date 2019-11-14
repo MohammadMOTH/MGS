@@ -1,4 +1,7 @@
-﻿using System;
+﻿using ServerGame.Core.Connctions;
+using ServerGame.Core.Data;
+using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -70,8 +73,9 @@ namespace Client
                         Console.WriteLine("Response received : {0}", response);
                     }
                 });
-                
-               
+
+                PackSendData data = null;
+                List<Data> datalist = null;
                 while (true)
                 {
                     var readline = Console.ReadLine();
@@ -95,7 +99,13 @@ namespace Client
                         while (manytime > 0)
                         {
                             sendDone.Reset();
-                            Send(client, world); sendDone.WaitOne();
+                            datalist = new List<Data>();
+                            datalist.Add(new Data(world, "string"));
+
+                             data = new PackSendData("PostionTeset", datalist);
+                            Send(client, Serialize(data));
+                            sendDone.WaitOne();
+
                             manytime--;
                             Thread.Sleep(sleeptimeMilSec);
 
@@ -105,9 +115,11 @@ namespace Client
 
                         
                     }
+                     datalist = new List<Data>();
+                    datalist.Add(new Data(readline, "string"));
+                    data = new PackSendData("Chat", datalist);
 
-
-                    Send(client, readline);
+                    Send(client, Serialize(data));
                     sendDone.WaitOne();
 
 
@@ -122,6 +134,20 @@ namespace Client
                 Console.WriteLine(e.ToString());
             }
 
+        }
+        public static byte[] Serialize(object anySerializableObject)
+        {
+            using (var memoryStream = new System.IO.MemoryStream())
+            {
+                (new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter()).Serialize(memoryStream, anySerializableObject);
+                return memoryStream.ToArray();
+            }
+        }
+
+        public static T Deserialize<T>(byte[] bytes)
+        {
+            using (var memoryStream = new System.IO.MemoryStream(bytes))
+                return (T)(new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter()).Deserialize(memoryStream);
         }
 
         private static void ConnectCallback(IAsyncResult ar)
@@ -195,15 +221,16 @@ namespace Client
             }
         }
 
-        private static void Send(Socket client, String data)
+        private static void Send(Socket client, byte[] byteData )
         {
             // Convert the string data to byte data using ASCII encoding.  
-            byte[] byteData = Encoding.ASCII.GetBytes(data);
+         
             byte[] sizeOfByteData = BitConverter.GetBytes(byteData.Length);
             byte[] SendingData = new byte[byteData.Length + sizeOfByteData.Length];
 
             Array.Copy(byteData, 0, SendingData, sizeOfByteData.Length, byteData.Length);
             Array.Copy(sizeOfByteData, 0, SendingData, 0, sizeOfByteData.Length);
+            ///TODO :Remove all byte arrays
             // Begin sending the data to the remote device.  
             client.BeginSend(SendingData, 0, SendingData.Length, 0,
                 new AsyncCallback(SendCallback), client);
