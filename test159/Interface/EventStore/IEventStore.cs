@@ -9,11 +9,9 @@ namespace ServerGame.Interface.EventStore
 {
   public interface IEventStore
     {
-        /// <summary>
-        /// List Of All Stored Events
-        /// </summary>
-        static  List<ServerGame.Core.Event.Event> StoredEvent { get; }
 
 
+
+     
     }
 }

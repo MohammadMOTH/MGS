@@ -15,12 +15,12 @@ namespace ServerGame.Core.EventStore
         public static List<ServerGame.Interface.Event.IEvenets> StoredEvent { get; protected set; }
    
 
-        public static void Parser( PackSendData packSendData , ref ServerGame.Core.Connctions.AbstractServer.StateObject DataUser ) {
+        public static void Parser( PackSendData packSendData , ref ServerGame.Core.Connctions.AbstractServer.StateObject DataUser,Interface.Connctions.ConnctionType ConnctionType) {
             StoredEvent.Find(Event => string.Equals ( Event.NameEvent , packSendData.NameOFEvent))
                 .OnRunEvent
                 (
                 packSendData
-                ,ref DataUser
+                ,ref DataUser , ConnctionType
                 ) ;
         
         }

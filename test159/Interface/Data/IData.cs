@@ -2,16 +2,18 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ServerGame
+namespace ServerGame.Interface.Data
 {
 
     public  interface IData
     {
         object DataS { get; }
-        int PramterNameHash { get;  }
-        string PramterName { get;  }
+
+        byte PramterName { get;  }
 
 
 
     }
+
+
 }

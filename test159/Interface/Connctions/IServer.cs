@@ -1,9 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using ServerGame;
+using ServerGame.Interface.Data;
+using ServerGame.Interface.User;
+using static ServerGame.Core.Connctions.AbstractServer;
+
 namespace ServerGame.Interface.Connctions
 {
 
@@ -23,8 +28,8 @@ namespace ServerGame.Interface.Connctions
          bool Enblie_Gzip { get; }
         bool LoopBack { get; }
 
-        List<Socket> listeners { get; }
-
+        List<Socket> ListenersTCP { get; }
+        List<Socket> ListenersUDP { get; }
 
 
         #region Public_Method
@@ -32,6 +37,8 @@ namespace ServerGame.Interface.Connctions
         Task Start();
          void TcpSendData(IData Data, IUser User);
          void UdpSendData(IData Data, IUser User);
+
+        bool WatchUdpByPort(ref StateObjectupb StateObjectupb,out int port, in int portIn);
         #endregion
 
     }

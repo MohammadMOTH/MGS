@@ -4,7 +4,7 @@ using System.Text;
 using ServerGame.Interface.Permissions;
 using ServerGame.Interface.Room;
 
-namespace ServerGame
+namespace ServerGame.Interface.Zone
 {
     /// <summary>
     /// 
@@ -15,56 +15,56 @@ namespace ServerGame
         /// <summary>
         /// ID Of Zone
         /// </summary>
-         int Id { get; protected set; }
+         int Id { get; }
         /// <summary>
         /// Permissions If Zone
         /// </summary>
-         List<IPermissionsZone> PermissionsZone { get; protected set; }
+         List<IPermissionsZone> PermissionsZone { get;}
         /// <summary>
         /// Name Of Zone
         /// </summary>
-         string ZoneName { get; protected set; }
+         string ZoneName { get;  }
         /// <summary>
         /// State Of Zone
         /// </summary>
-         bool IsActive { get; protected set; }
+         bool IsActive { get; }
         /// <summary>
         /// Max User Can Zone Have
         /// </summary>
-         int MaxUsers { get; protected set; }
+         int MaxUsers { get;  }
         /// <summary>
         /// Max Rooms Can Zone Have
         /// </summary>
-         int MaxRooms { get; protected set; }
+         int MaxRooms { get;  }
         /// <summary>
         /// List Of Rooms That Zone Have
         /// </summary>
-         List<IRoom> Rooms { get; set; }
+         List<IRoom> Rooms { get; }
         /// <summary>
         /// Max IDLE Time (In Millisecond) For User
         /// </summary>
-         int UserMaxIdleTime { get; set; }
+         int UserMaxIdleTime { get;  }
         /// <summary>
         /// Permission To Allow Guest User Access To Zone
         /// </summary>
-         bool GuestUsersAccess { get; set; }
+         bool GuestUsersAccess { get;  }
         /// <summary>
         /// Enable Filtering Usernames
         /// </summary>
-         bool FilterUsernamesEnable { get; set; }
+         bool FilterUsernamesEnable { get;  }
         /// <summary>
         /// Enable Filtering Room Names
         /// </summary>
-         bool FilterRoomNamesEnable { get; set; }
+         bool FilterRoomNamesEnable { get;  }
         /// <summary>
         /// Enable Filtering Messages
         /// </summary>
-         bool FilterMessagesEnable { get; set; }
+         bool FilterMessagesEnable { get;  }
 
         /// <summary>
         /// Enable Uploading Files
         /// </summary>
-         bool FileUploadEnable { get; set; }
+         bool FileUploadEnable { get;  }
 
         /// <summary>
         /// Change Status For Bool state 
@@ -89,6 +89,8 @@ namespace ServerGame
         /// <param name="message"></param>
          void BroadcastingMessage(int zoneId, string message);
 
+
+        void ChangeName(string newname);
 
     }
 }

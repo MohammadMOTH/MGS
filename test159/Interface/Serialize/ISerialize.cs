@@ -3,12 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ServerGame.Core.EventStore
+namespace ServerGame.Interface.Serialize
 {
-    public   class EventStore : EventStoreAbstract
+    interface Serialize
     {
 
+        byte[] Encoder(PackSendData PackSendData);
 
-      
+
+
     }
 }

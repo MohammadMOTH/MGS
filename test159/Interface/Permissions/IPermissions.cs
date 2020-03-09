@@ -4,14 +4,17 @@ using System.Text;
 
 namespace ServerGame.Interface.Permissions
 {
- public   interface IPermissions
+    public   interface IPermissions
     {
 
 
+        bool Loginby(string username, string password);
 
-        bool CanAddNewUser { get; }
+        bool Loginby(Interface.User.IUser user);
 
-        bool CanAddNewRoom { get;  }
+        bool Loginby(int id);
+
+
 
 
     }

@@ -9,27 +9,74 @@ using ServerGame.Interface.Connctions;
 using System.IO.Compression;
 using System.IO;
 using ServerGame.Core.Data;
+using ServerGame.Interface.Data;
+using ServerGame.Interface.User;
+using ServerGame.Core.GException;
 
 namespace ServerGame.Core.Connctions
 {
     public abstract class AbstractServer : IServer
     {
+        
 
         public class StateObject
         {
 
             public Socket workSocket ;
-
-            public const int BufferSize = 1024;
- 
-            public byte[] buffer = new byte[BufferSize];
-            //    public StringBuilder sb = new StringBuilder();
+            public   int BufferSize = 1024;
+            public byte[] buffer = null;
+            //public StringBuilder sb = new StringBuilder();
             public List<byte> ListOfByteReciver = new List<byte>();
-
             public int alldatasqmant = 0;
             public int Nowdatasqmant = 0;
-
             public ManualResetEvent StopAndLoopReading = new ManualResetEvent(false);
+            public object returnObjectFromEventPresor;
+            public EndPoint IPEndPointUDP;
+            public IUser user;
+            public   StateObject()
+            {
+                BufferSize = 1024;
+                buffer = new byte[1024];
+            }
+
+             ~StateObject()
+            {
+
+                buffer = null;
+                ListOfByteReciver.Clear();
+                ListOfByteReciver = null;
+                StopAndLoopReading = null;
+                IPEndPointUDP = null;
+                workSocket = null;
+                returnObjectFromEventPresor = null;
+
+            }
+            public void Dispose()
+            {
+                buffer = null;
+                ListOfByteReciver.Clear();
+                ListOfByteReciver = null;
+                StopAndLoopReading = null;
+                IPEndPointUDP = null;
+                workSocket = null;
+                returnObjectFromEventPresor = null;
+                //free up any resources
+            }
+
+
+        }
+
+        
+        public class StateObjectupb : StateObject
+        {
+            public  StateObjectupb() : base()
+            {
+                BufferSize = 65507;
+                buffer = new byte[65507];
+
+            }
+
+
 
 
         }
@@ -37,8 +84,10 @@ namespace ServerGame.Core.Connctions
         /// listeners pointer looping
         /// </summary>
         public ManualResetEvent StopAndLoop = new ManualResetEvent(false);
-       // public ManualResetEvent StopAndLoopudb = new ManualResetEvent(false);
+        // public ManualResetEvent StopAndLoopudb = new ManualResetEvent(false);
+
         
+
         public bool Enblie_Gzip { get; protected set; }
         /// <summary>
         /// udp port
@@ -47,7 +96,11 @@ namespace ServerGame.Core.Connctions
         /// <summary>
         /// save here all connctions tpc
         /// </summary>
-        public List<Socket> listeners { get; protected set; }
+        public List<Socket> ListenersUDP { get; protected set; }
+
+
+        public List<Socket> ListenersTCP { get; protected set; }
+
         /// <summary>
         /// tcp prot
         /// </summary>
@@ -68,7 +121,8 @@ namespace ServerGame.Core.Connctions
         /// <param name="Enblie_Gzip">commpress data and decompress mode </param>
         public AbstractServer(int UDPPort, int TCPPort ,bool LoopBack = false , bool Enblie_Gzip = false )
         {
-            listeners = new List<Socket>();
+            ListenersTCP = new List<Socket>();
+            ListenersUDP = new List<Socket>();
             this.UDPPort = UDPPort;
             this.TCPPort = TCPPort;
             this.LoopBack = LoopBack;
@@ -77,6 +131,62 @@ namespace ServerGame.Core.Connctions
 
         public abstract void TcpSendData(IData Data, IUser User);
         public abstract void UdpSendData(IData Data, IUser User);
+
+
+        public virtual bool WatchUdpByPort(ref StateObjectupb StateObjectupb, out int portOut , in int portIn = 0)
+        {
+            try
+            {
+
+               
+               
+               
+                //   IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
+            
+                IPEndPoint localEndPoint = new IPEndPoint(IPAddress.Any, portIn);
+
+                StateObjectupb.workSocket = new Socket
+                       (
+                      (IPAddress.Any).AddressFamily
+                       ,
+                       SocketType.Dgram
+                       ,
+                       ProtocolType.Udp
+                       );
+              
+                StateObjectupb.workSocket.Bind(localEndPoint);
+                portOut = (StateObjectupb.workSocket.LocalEndPoint as IPEndPoint).Port;
+         
+                var state = StateObjectupb;
+                Task.Run(() =>
+                {
+           
+                agen:
+                    state.StopAndLoopReading.Reset();
+                    IPEndPoint sender = new IPEndPoint(IPAddress.Any, 0);
+                    EndPoint tempRemoteEP = (EndPoint)sender;
+                    if (SocketConnected(state.workSocket))
+                        state.workSocket.BeginReceiveFrom(state.buffer, 0, state.BufferSize, 0, ref tempRemoteEP, new AsyncCallback(ReadCallbackudp), state);
+                    
+                    state.StopAndLoopReading.WaitOne();
+
+                    goto agen;
+                });
+
+                return true;
+            }
+            catch (Exception e)
+            {
+             
+                Console.WriteLine(e.ToString());
+                portOut = -1;
+                return false;
+            }
+            
+
+
+        }
+
 
         /// <summary>
         /// Start Listeing 
@@ -139,20 +249,7 @@ namespace ServerGame.Core.Connctions
 
         }
 
-        public static byte[] Serialize(object anySerializableObject)
-        {
-            using (var memoryStream = new MemoryStream())
-            {
-                (new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter()).Serialize(memoryStream, anySerializableObject);
-                return memoryStream.ToArray();
-            }
-        }
-
-        public static B Deserialize<B>( byte[] bytes )
-        {
-            using (var memoryStream = new MemoryStream(bytes))
-                return (B) (new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter()).Deserialize(memoryStream);
-        }
+  
 
 
         protected bool SocketConnected(Socket s)
@@ -178,7 +275,7 @@ namespace ServerGame.Core.Connctions
            
             Socket listener = (Socket)ar.AsyncState;
             Socket handler = listener.EndAccept(ar);
-            listeners.Add(handler);
+            ListenersTCP.Add(handler);
                 
             StateObject state = new StateObject();
             state.workSocket = handler;
@@ -186,11 +283,14 @@ namespace ServerGame.Core.Connctions
 
             Task.Run(() =>
             {
-                agen:
+            agen:
 
                 state.StopAndLoopReading.Reset();
-              if (   SocketConnected (state.workSocket) )
-                    handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0, new AsyncCallback(ReadCallback), state);
+                if (SocketConnected(state.workSocket))
+                {
+                    var ff = handler.BeginReceive(state.buffer, 0, state.BufferSize, 0, new AsyncCallback(ReadCallback), state);
+                
+                }
                 state.StopAndLoopReading.WaitOne();
 
                 goto agen;
@@ -204,10 +304,11 @@ namespace ServerGame.Core.Connctions
         /// Waiting byte form client 
         /// </summary>
         /// <param name="ar">its for handle async with StateObject class </param>
-        protected  void ReadCallback(IAsyncResult ar)
+        protected  void ReadCallback(IAsyncResult ar )
         {
             //  StopAndLoopudb.Set();
             StateObject state = (StateObject)ar.AsyncState;
+       
             try
             {
                 String content = String.Empty;
@@ -223,8 +324,14 @@ namespace ServerGame.Core.Connctions
                 if (!SocketConnected (state.workSocket))
                    return;
                 // Read data from the client socket.   
-                int bytesRead = state.workSocket.EndReceive(ar);
-            
+                IPEndPoint sender = new IPEndPoint(IPAddress.Any, 0);
+                EndPoint RemoteEP = (EndPoint)sender;
+        
+          
+             var    bytesRead = state.workSocket.EndReceive(ar);
+                
+
+
                 if (bytesRead > 0)
                 {
                     HaveMorData:
@@ -310,8 +417,8 @@ namespace ServerGame.Core.Connctions
                     {
                       
                            var temp = state.ListOfByteReciver.ToArray();
-                        PackSendData PackSendData = Deserialize<PackSendData>(temp);
-                        EventStore.EventStore.Parser(PackSendData, ref state);
+                        PackSendData PackSendData = Serialize.DeSerialize.Deserialize(temp);
+                        EventStore.EventStore.Parser(PackSendData, ref state , ConnctionType.TCP);
 
                         Array.Clear(temp, 0, temp.Length);
                       
@@ -331,8 +438,8 @@ namespace ServerGame.Core.Connctions
                         
                         var temp = state.ListOfByteReciver.GetRange(0, state.alldatasqmant ).ToArray();
 
-                        PackSendData PackSendData = Deserialize< PackSendData>(temp);
-                        EventStore.EventStore.Parser( PackSendData,ref state);
+                        PackSendData PackSendData = Serialize.DeSerialize.Deserialize(temp);
+                        EventStore.EventStore.Parser( PackSendData,ref state , ConnctionType.TCP);
 
                         Array.Clear(temp, 0, temp.Length);
 
@@ -366,6 +473,91 @@ namespace ServerGame.Core.Connctions
             }
             state.StopAndLoopReading.Set();
         }
+
+        /// <summary>
+        /// Waiting byte form client 
+        /// </summary>
+        /// <param name="ar">its for handle async with StateObject class </param>
+        protected void ReadCallbackudp(IAsyncResult ar)
+        {
+            //  StopAndLoopudb.Set();
+            StateObject state = (StateObject)ar.AsyncState;
+            
+            try
+            {
+                String content = String.Empty;
+
+
+
+                /*      if (state.alldatasqmant == 0) { 
+                      state.ListOfByteReciver.Clear(); // اتوقع هذا افضل من ناحية الذاكرة
+                     // state.sb = new StringBuilder();
+                      }*/
+
+
+                if (!SocketConnected(state.workSocket))
+                    return;
+                // Read data from the client socket.   
+                IPEndPoint sender = new IPEndPoint(IPAddress.Any, 0);
+                state.IPEndPointUDP = (EndPoint)sender;
+      
+          
+                var bytesRead = state.workSocket.EndReceiveFrom(ar,ref state.IPEndPointUDP);
+               
+
+
+
+
+                if (bytesRead > 0)
+                {
+          
+
+                      
+
+
+                            for (int i = 4; i < bytesRead; i++)
+                            {
+                                state.ListOfByteReciver.Add(state.buffer[i]);
+                            }
+                            Array.Clear(state.buffer, 0, state.buffer.Length);
+                      
+
+                   
+
+                        var temp = state.ListOfByteReciver.GetRange(0, bytesRead -4 ).ToArray();
+
+                   
+                        PackSendData PackSendData = Serialize.DeSerialize.Deserialize(temp);
+                    
+                        EventStore.EventStore.Parser(PackSendData, ref state,ConnctionType.UDP);
+
+                        Array.Clear(temp, 0, temp.Length);
+
+                        temp = null;
+
+
+                        Console.WriteLine("From Ip :{1} , port:{2}  Read {0} bytes from socket.",
+                        bytesRead, (state.IPEndPointUDP as IPEndPoint).Address, (state.IPEndPointUDP as IPEndPoint).Port);
+                      
+                        bytesRead = 0;
+                    state.ListOfByteReciver.Clear();
+                   
+
+
+                }
+
+
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+
+            }
+            state.ListOfByteReciver.Clear();
+            state.StopAndLoopReading.Set();
+        }
+
 
         /// <summary>
         /// Compress Data Gzip
@@ -414,22 +606,112 @@ namespace ServerGame.Core.Connctions
                 
             }
         }
+
+       private  void GetRamdomUdpForUdp ()
+        {
+
+            
+
+        }
         /// <summary>
         /// send data by Socket handler 
         /// </summary>
         /// <param name="handler">Socket handler  </param>
         /// <param name="data"> String data to send </param>
-        public virtual void Send(Socket handler, String data)
+        public virtual void Send(Socket handler, String str)
         {
+            var datalist = new List<ServerGame.Core.Data.Data>();
+            datalist.Add(new ServerGame.Core.Data.Data(str, 0));
+
+            var data = new PackSendData(0, datalist);
+
             byte[] byteData;
             if (this.Enblie_Gzip)
-              byteData = Compress(Serialize(data));
+                byteData = Compress(Serialize.Serialize.serialize(data));
             else
-                byteData = Serialize(data);
+                byteData = Serialize.Serialize.serialize(data);
 
             handler.BeginSend(byteData, 0, byteData.Length, 0,
                 new AsyncCallback(SendCallback), handler);
 
+        }
+        /// <summary>
+        /// send data by Socket handler 
+        /// </summary>
+        /// <param name="handler">Socket handler  </param>
+        /// <param name="data"> String data to send </param>
+        public virtual void Send(Socket handler, PackSendData PackSendData)
+        {
+
+
+            byte[] byteData;
+            if (this.Enblie_Gzip)
+                byteData = Compress(Serialize.Serialize.serialize(PackSendData));
+            else
+                byteData = Serialize.Serialize.serialize(PackSendData);
+
+            handler.BeginSend(byteData, 0, byteData.Length, 0,
+                new AsyncCallback(SendCallback), handler);
+
+        }
+
+        /// <summary>
+        /// send data by Socket handler 
+        /// </summary>
+        /// <param name="handler">Socket handler  </param>
+        /// <param name="data"> String data to send </param>
+        public virtual void Sendudp(Socket handler, String str , EndPoint EndPoint)
+        {
+        var    datalist = new List<ServerGame.Core.Data.Data>();
+            datalist.Add(new ServerGame.Core.Data.Data(str,0));
+
+           var data = new PackSendData(0, datalist);
+
+            byte[] byteData;
+            if (this.Enblie_Gzip)
+                byteData = Compress(Serialize.Serialize.serialize(data));
+            else
+                byteData = Serialize.Serialize.serialize(data);
+
+            handler.BeginSendTo(byteData, 0, byteData.Length, 0, EndPoint, new AsyncCallback(SendCallbackudp), handler);
+
+        }
+
+        public virtual void Sendudp(Socket handler, PackSendData PackSendData, EndPoint EndPoint)
+        {
+          
+
+            byte[] byteData;
+            if (this.Enblie_Gzip)
+                byteData = Compress(Serialize.Serialize.serialize(PackSendData));
+            else
+                byteData = Serialize.Serialize.serialize(PackSendData);
+
+            handler.BeginSendTo(byteData, 0, byteData.Length, 0, EndPoint, new AsyncCallback(SendCallbackudp), handler);
+
+        }
+
+
+        /// <summary>
+        /// Send Call back  async 
+        /// </summary>
+        /// <param name="ar">its for handle async with StateObject class</param>
+        protected virtual void SendCallbackudp(IAsyncResult ar)
+        {
+            try
+            {
+                Socket handler = (Socket)ar.AsyncState;
+                int bytesSent = handler.EndSendTo(ar);
+                Console.WriteLine("Sent {0} bytes to client.", bytesSent);
+
+                //  handler.Shutdown(SocketShutdown.Both);
+                //  handler.Close();
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
         }
 
         /// <summary>

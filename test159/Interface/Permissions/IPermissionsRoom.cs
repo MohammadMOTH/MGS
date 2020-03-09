@@ -5,10 +5,13 @@ using System.Text;
 
 namespace ServerGame.Interface.Permissions
 {
-   public interface IPermissionsZone : IPermissions
+   public interface IPermissionsRoom : IPermissions
     {
      
-        bool CanAddNewZoom { get; }
+        bool CanAddNewRoom { get; }
+
+
+
 
     }
 }

@@ -1,17 +1,18 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
   </PropertyGroup>
-
   <ItemGroup>
     <None Remove="test159.dll" />
   </ItemGroup>
-
   <ItemGroup>
     <Reference Include="ServerGame">
       <HintPath>..\test159\bin\Release\netcoreapp3.0\ServerGame.dll</HintPath>
     </Reference>
   </ItemGroup>
-
 </Project>

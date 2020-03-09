@@ -7,10 +7,10 @@ namespace ServerGame.Core.Connctions
     [Serializable]
     public  class PackSendData 
     {
-        public  string NameOFEvent { get; protected set; }
+        public ushort NameOFEvent { get; protected set; }
         public List<ServerGame.Core.Data.Data> AllData { get; protected set; }
         
-        public PackSendData(string NameOFEvent, List<ServerGame.Core.Data.Data> AllData)
+        public PackSendData(ushort  NameOFEvent, List<ServerGame.Core.Data.Data> AllData)
         {
             this.NameOFEvent = NameOFEvent;
             this.AllData = AllData;
@@ -20,6 +20,24 @@ namespace ServerGame.Core.Connctions
         {
             this.AllData.Add(Data);
         }
+        public void AddData(ServerGame.Core.Data.Data[] Datas)
+        {
+            foreach (var Data in Datas)
+            {
+                this.AllData.Add(Data);
+            }
+            
+        }
+
+
+    }
+
+   public enum DataType : byte
+    {
+        String = 0,
+        Voice = 1,
+        Float = 2,
+ 
 
 
     }

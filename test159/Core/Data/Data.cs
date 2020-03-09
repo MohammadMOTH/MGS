@@ -11,20 +11,24 @@ namespace ServerGame.Core.Data
         
         public object DataS { get; protected set; }
 
-        public int PramterNameHash { get; protected set; }
-
-        public string PramterName { get; protected set; }
 
 
-        public Data(object TypeData, string PramterName)
+        public byte PramterName { get; protected set; }
+
+
+        public Data(object TypeData, byte PramterName)
         {
-     
             this.DataS = TypeData;
-            this.PramterNameHash = PramterName.GetHashCode();
             this.PramterName = PramterName;
 
         }
+        public void DataSChange (object Datas)
+        {
+            this.DataS = Datas;
 
+        }
 
     }
+   
+
 }
