@@ -4,12 +4,12 @@ it use udp tcp protocol .
 
 
 
-#warning 
+# warning 
 It's prototype MGS
 
 
 
-#Start 
+# Start  
 first install .net core , then start Server on your machen (windows , linux , mac) .
 
 ```
@@ -42,7 +42,7 @@ Copyright (C) 2020 ServerGame
 
 Server#:
 ```
-#Client    
+# Client    
 Run Client project 
 ```
 
